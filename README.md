@@ -14,21 +14,15 @@ Matplotlib: A plotting library for generating high-quality graphs and visualizat
 import numpy as np
 
 pb = []
-col = int(input("Enter the Parity bits : "))      # n-k
-row = int(input("Enter the Message bits : "))     # k
+col = int(input("Enter the Parity bits : "))     
+row = int(input("Enter the Message bits : "))     
 
-# -----------------------------
-# Construct Parity Matrix P
-# -----------------------------
 for i in range(row):
     p = list(map(int, input(f"Enter row {i+1} (space separated) : ").split()))
     pb.append(p)
 
 P = np.array(pb, dtype=int)
 
-# -----------------------------
-# Generator Matrix G = [P | I]
-# -----------------------------
 I_k = np.eye(row, dtype=int)
 G = np.hstack((P, I_k))
 
@@ -61,9 +55,6 @@ for i in range(len(messages)):
 d_min = np.min([w for w in weights if w != 0])
 print("\nMinimum Hamming Distance:", d_min)
 
-# -----------------------------
-# Parity Check Matrix H = [I | P^T]
-# -----------------------------
 I_r = np.eye(col, dtype=int)
 H = np.hstack((I_r, P.T))
 
@@ -73,9 +64,6 @@ for r in H:
 
 H_T = H.T
 
-# -----------------------------
-# Receive Codeword
-# -----------------------------
 rc = list(map(int, input("\nEnter the received codeword : ").split()))
 r = np.array(rc)
 
@@ -84,9 +72,6 @@ S = np.mod(np.dot(r, H_T), 2)
 
 print("Syndrome :", " ".join(map(str, S)))
 
-# -----------------------------
-# Error Detection & Correction
-# -----------------------------
 error = np.zeros(n, dtype=int)
 
 for i in range(n):
